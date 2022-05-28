@@ -3,35 +3,8 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import Axios from "axios";
+import axios from "axios";
 
-// Remove the days array and use useState to add a days state to the our Application component. It can be initialized as an empty array.
-const [days, setDays] = useState([]);
-
-useEffect(() => {
-  //axios request here...
-
-
-}, []);
-
-// // Mock data for days --> later will be replaced with data fm api
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
 
 const appointments = {
   "1": {
@@ -73,8 +46,18 @@ const appointments = {
 };
 
 export default function Application(props) {
+  // default selected day will be Monday
   const [day, setDay] = useState("Monday");
-  console.log(day);
+
+  // show the other days of the week
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    //axios request here...
+    axios
+      .get("api/days")
+      .then(response => setDays(response.data));
+  }, []);
 
   return (
     <main className="layout">
