@@ -46,11 +46,30 @@ const appointments = {
 };
 
 export default function Application(props) {
+  // combine the state for day, days, and appointments into a state into a single object
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+  });
+
+  // we can create a function called setDay that updates the state with the new day
+  const setDay = day => setState({ ...state, day });
+
+
+
+
   // default selected day will be Monday
-  const [day, setDay] = useState("Monday");
+  // const [day, setDay] = useState("Monday");
 
   // show the other days of the week
-  const [days, setDays] = useState([]);
+  // const [days, setDays] = useState([]);
+
+  // Implement the setDays function in the Application component to update the days state. This function should follow a similar pattern to our existing setDay function.
+  const setDays = days => {
+    //... your code here ...
+    setState(prev => ({ ...prev, days }));
+  }, [];
+
 
   useEffect(() => {
     //axios request here...
@@ -70,8 +89,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            value={day}
+            days={state.days}
+            value={state.day}
             onChange={setDay}
           />
         </nav>
