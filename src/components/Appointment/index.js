@@ -36,7 +36,7 @@ export default function Appointment(props) {
           onDelete={() => console.log("onDelete")}
         />
       )}
-      {mode === CREATE && <Form interviewers={interviewers} onCancel={() => back(EMPTY)} />}
+      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back(EMPTY)} />}
 
     </article>
   );
