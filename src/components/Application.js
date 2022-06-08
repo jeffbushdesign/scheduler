@@ -63,10 +63,29 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
+
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => {
+        setState({
+          ...state,
+          appointments
+        });
+      });
+
+
+
+    // Making Our Data Persistent
+    // When we refresh the browser, our saved data is lost because we are only updating the state locally. We will need to use axios to make a request to the API to update the appointment with the interview.
+
+    // Instruction
+    // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint to update the database with the interview data.
+
+    // There are three stages to this sequence.
+
+    // Make the request with the correct endpoint using the appointment id, with the interview data in the body, we should receive a 204 No Content response.
+    // When the response comes back we update the state using the existing setState.
+    // Transition to SHOW when the promise returned by props.bookInterview resolves. This means that the PUT request is complete.
+    // When we execute the full sequence of events, the result looks the same as before. The difference is that when the browser refreshes, the data is persistent.
   }
 
 
