@@ -9,13 +9,17 @@ import "./styles.scss";
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
+import Confirm from './Confirm';
 
 
 export default function Appointment(props) {
+  // (for reusability)
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
+  const DELETE = "DELETE";
+  const CONFIRM = "CONFIRM";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -33,8 +37,22 @@ export default function Appointment(props) {
       .then(() => {
         transition(SHOW);
       });
-
   }
+
+  function cancel() {
+    transition("DELETE", true);
+    props.cancelInterview(props.id)
+      .then(() => {
+        transition("EMPTY");
+      });
+  }
+
+  function confirm() {
+    transition("CONFIRM");
+  }
+
+
+
 
 
   console.log('props.interviewers', props.interviewers);
@@ -49,9 +67,11 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onEdit={() => console.log("onEdit")}
-          onDelete={() => console.log("onDelete")}
+          onDelete={() => confirm()}
         />
       )}
+      {mode === DELETE && <Status message="Deleting..." />}
+      {mode === CONFIRM && <Confirm message="Are you sure you would like to delete?" onCancel={() => back()} onConfirm={() => cancel()} />}
       {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back(EMPTY)} onSave={save} />}
 
     </article>

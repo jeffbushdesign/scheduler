@@ -20,6 +20,7 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
   console.log('dailyInterviewers', dailyInterviewers);
+
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
@@ -31,6 +32,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
@@ -71,22 +73,29 @@ export default function Application(props) {
           appointments
         });
       });
-
-
-
-    // Making Our Data Persistent
-    // When we refresh the browser, our saved data is lost because we are only updating the state locally. We will need to use axios to make a request to the API to update the appointment with the interview.
-
-    // Instruction
-    // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint to update the database with the interview data.
-
-    // There are three stages to this sequence.
-
-    // Make the request with the correct endpoint using the appointment id, with the interview data in the body, we should receive a 204 No Content response.
-    // When the response comes back we update the state using the existing setState.
-    // Transition to SHOW when the promise returned by props.bookInterview resolves. This means that the PUT request is complete.
-    // When we execute the full sequence of events, the result looks the same as before. The difference is that when the browser refreshes, the data is persistent.
   }
+  console.log('state', state);
+
+  function cancelInterview(id) {
+    // make a delete call to the back end
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: null
+        };
+
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+
+        setState({
+          ...state,
+          appointments
+        });
+      });
+  };
 
 
 
@@ -117,7 +126,6 @@ export default function Application(props) {
         <Appointment key="last" time="5pm" />
       </section>
     </main>
-
   );
 }
 
