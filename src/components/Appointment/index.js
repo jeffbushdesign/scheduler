@@ -1,6 +1,7 @@
 import React from 'react';
 import useVisualMode from "hooks/useVisualMode";
 import Form from './Form';
+import Status from './Status';
 
 
 import "./styles.scss";
@@ -14,6 +15,7 @@ export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -26,6 +28,7 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+    transition(SAVING);
     props.bookInterview(props.id, interview)
       .then(() => {
         transition(SHOW);
@@ -40,6 +43,7 @@ export default function Appointment(props) {
       <Header time={props.time} />
 
       {mode === EMPTY && (<Empty onAdd={() => transition(CREATE)} />)}
+      {mode === SAVING && <Status message="Saving..." />}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
