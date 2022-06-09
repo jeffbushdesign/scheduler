@@ -32,27 +32,6 @@ export default function useVisualMode(initial) {
     setMode(newMode);
 
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // return an object with a mode property
   return { mode, transition, back };
 }
-
-// Create a transition function within useVisualMode that will take in a new mode and update the mode state with the new value. If we used useState to initialize the mode state in useVisualMode, what will we have to do to update the mode value?
-// function useCustomHook() {
-//   function action() {}
-
-//   return { action };
-// }
