@@ -51,7 +51,8 @@ export default function Appointment(props) {
 
   function cancel() {
     transition("DELETE", true);
-    props.cancelInterview(props.id)
+    props
+      .cancelInterview(props.id)
       .then(() => {
         transition("EMPTY");
       })
@@ -71,7 +72,7 @@ export default function Appointment(props) {
 
       {mode === EMPTY && (<Empty onAdd={() => transition(CREATE)} />)}
       {mode === SAVING && <Status message="Saving..." />}
-      {mode === ERROR_SAVE && <Status message="Could not cancel appointment" />}
+      {/* {mode === ERROR_SAVE && <Status message="Could not cancel appointment" />} */}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
