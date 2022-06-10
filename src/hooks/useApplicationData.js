@@ -28,7 +28,6 @@ export default function useApplicationData() {
   }, []);
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -39,12 +38,12 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
         setState({
           ...state,
-          appointments
+          appointments,
+          days: spotsRemaining(state, appointments)
         });
       });
   }
@@ -66,10 +65,29 @@ export default function useApplicationData() {
 
         setState({
           ...state,
-          appointments
+          appointments,
+          days: spotsRemaining(state, appointments)
         });
       });
   };
+
+  // Spots Remaining Feature
+  const spotsRemaining = function (state, appointments) {
+    return state.days.map(day => {
+      if (day.name === state.day) {
+        return {
+          ...day,
+          //get the number of spots that do not have interview: null
+          spots: day.appointments.map(id => appointments[id]).filter(({ interview }) => !interview).length,
+        };
+      }
+      return day;
+    });
+  };
+
+
+
+
 
   return (
     {
@@ -80,4 +98,5 @@ export default function useApplicationData() {
     }
   );
 }
+
 
