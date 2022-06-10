@@ -21,6 +21,8 @@ export default function Appointment(props) {
   const DELETE = "DELETE";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -35,11 +37,16 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+
     transition(SAVING);
+
     props.bookInterview(props.id, interview)
       .then(() => {
         transition(SHOW);
-      });
+      })
+      .catch(error => transition(ERROR_SAVE, true));
+
+    // const ERROR_SAVE = "ERROR_SAVE";
   }
 
   function cancel() {
@@ -47,7 +54,8 @@ export default function Appointment(props) {
     props.cancelInterview(props.id)
       .then(() => {
         transition("EMPTY");
-      });
+      })
+      .catch(error => transition(ERROR_DELETE, true));
   }
 
   function confirm() {
@@ -63,6 +71,7 @@ export default function Appointment(props) {
 
       {mode === EMPTY && (<Empty onAdd={() => transition(CREATE)} />)}
       {mode === SAVING && <Status message="Saving..." />}
+      {mode === ERROR_SAVE && <Status message="Could not cancel appointment" />}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
