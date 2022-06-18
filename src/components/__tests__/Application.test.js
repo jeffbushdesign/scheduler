@@ -69,7 +69,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
@@ -96,7 +96,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 
   it("shows the save error when failing to save an appointment", async () => {
@@ -122,7 +122,7 @@ describe("Application", () => {
 
     expect(getByText(appointment, "Saving...")).toBeInTheDocument();
 
-    await waitForElement(() => getByText(appointment, "Could not save appointment :("));
+    await waitForElement(() => getByText(appointment, "Could not save appointment"));
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
@@ -143,6 +143,6 @@ describe("Application", () => {
 
     expect(getByText(appointment, "Deleting...")).toBeInTheDocument();
 
-    await waitForElement(() => getByText(appointment, "Could not delete appointment :("));
+    await waitForElement(() => getByText(appointment, "Could not cancel appointment"));
   });
 });

@@ -65,14 +65,15 @@ export default function Appointment(props) {
 
 
 
-  console.log('props.interview', props.interview);
+
   return (
     <article className='appointment' data-testid="appointment">
       <Header time={props.time} />
 
       {mode === EMPTY && (<Empty onAdd={() => transition(CREATE)} />)}
       {mode === SAVING && <Status message="Saving..." />}
-      {/* {mode === ERROR_SAVE && <Status message="Could not cancel appointment" />} */}
+      {mode === ERROR_SAVE && <Status message="Could not save appointment" />}
+      {mode === ERROR_DELETE && <Status message="Could not cancel appointment" />}
       {mode === SHOW && (
         <Show
           student={props.interview.student}

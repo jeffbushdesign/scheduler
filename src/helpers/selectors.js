@@ -10,11 +10,10 @@ export function getAppointmentsForDay(state, dayName) {
   // filteredDay will return one object
   if (!filteredDay) return [];
 
-  console.log('filteredDay:', filteredDay);
-  console.log('filteredDay.appointments', filteredDay.appointments);
+
 
   const appointmentIDs = filteredDay.appointments;
-  // console.log('appointmentIDs: ', appointmentIDs);
+
 
   // map
   for (const id of appointmentIDs) {

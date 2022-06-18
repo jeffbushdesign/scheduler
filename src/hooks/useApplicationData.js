@@ -21,9 +21,9 @@ export default function useApplicationData() {
       axios.get('api/appointments'),
       axios.get('api/interviewers')
     ]).then((all) => {
-      // console.log('days: all[0]', all[0], 'appointments: all[1]', all[1]);
+
       setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-      console.log('interviewers:', all[2].data);
+
     });
   }, []);
 
@@ -47,7 +47,7 @@ export default function useApplicationData() {
         });
       });
   }
-  console.log('state', state);
+
 
   function cancelInterview(id) {
     // make a delete call to the back end
