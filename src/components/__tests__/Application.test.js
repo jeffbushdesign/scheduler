@@ -47,6 +47,8 @@ describe("Application", () => {
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 
+
+
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     const { container, debug } = render(<Application />);
 
