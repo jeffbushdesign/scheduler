@@ -10,6 +10,7 @@ import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 import Confirm from './Confirm';
+import Error from './Error';
 
 
 export default function Appointment(props) {
@@ -71,8 +72,10 @@ export default function Appointment(props) {
 
       {mode === EMPTY && (<Empty onAdd={() => transition(CREATE)} />)}
       {mode === SAVING && <Status message="Saving..." />}
-      {mode === ERROR_SAVE && <Status message="Could not save appointment" />}
-      {mode === ERROR_DELETE && <Status message="Could not cancel appointment" />}
+      {/* {mode === ERROR_SAVE && <Status message="Could not save appointment" />} */}
+      {mode === ERROR_SAVE && <Error message="Could not save appointment" onClose={back} />}
+      {/* {mode === ERROR_DELETE && <Status message="Could not cancel appointment" />} */}
+      {mode === ERROR_DELETE && <Error message="Could not cancel appointment" onClose={back} />}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
@@ -81,6 +84,8 @@ export default function Appointment(props) {
           onDelete={() => confirm()}
         />
       )}
+
+
       {mode === DELETE && <Status message="Deleting..." />}
       {mode === CONFIRM && <Confirm message="Delete this interview?" onCancel={() => back} onConfirm={() => cancel()} />}
       {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back} onSave={save} />}
