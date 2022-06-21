@@ -30,7 +30,7 @@ export default function Appointment(props) {
 
 
 
-  const interviewers = [];
+
 
   function save(name, interviewer) {
     const interview = {
@@ -82,14 +82,14 @@ export default function Appointment(props) {
         />
       )}
       {mode === DELETE && <Status message="Deleting..." />}
-      {mode === CONFIRM && <Confirm message="Delete this interview?" onCancel={() => back()} onConfirm={() => cancel()} />}
-      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back()} onSave={save} />}
+      {mode === CONFIRM && <Confirm message="Delete this interview?" onCancel={() => back} onConfirm={() => cancel()} />}
+      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back} onSave={save} />}
       {mode === EDIT &&
         <Form
           student={props.interview.student}
           interviewer={props.interview.interviewer.id}
           interviewers={props.interviewers}
-          onCancel={() => back()}
+          onCancel={() => back}
           onSave={save}
         />
       }

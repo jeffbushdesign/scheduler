@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // to pass the first test our useVisualMode Hook will need to: take in an initial mode (initial)
 export default function useVisualMode(initial) {
