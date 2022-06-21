@@ -46,7 +46,6 @@ export default function Appointment(props) {
       })
       .catch(error => transition(ERROR_SAVE, true));
 
-    // const ERROR_SAVE = "ERROR_SAVE";
   }
 
   function cancel() {
@@ -98,14 +97,5 @@ export default function Appointment(props) {
   );
 }
 
-// .add("Edit", () => (
-//   <Form
-//     name="Jeff Bush"
-//     interviewer={3}
-//     interviewers={interviewers}
-//     onSave={action("onSave")}
-//     onCancel={action("onCancel")}
-//   />
-// ));
 
 
